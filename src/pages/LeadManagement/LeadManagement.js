@@ -213,8 +213,8 @@ class LeadManagement extends Component {
                   </Col>
                 </Row>
 
-                <div className="table-responsive">
-                  <table className="table table-hover table-centered table-nowrap mb-0">
+                <div className="table-responsive" style={{ height:"25rem"}}>
+                  <table className="table table-hover table-centered table-nowrap mb-0" >
                     <thead>
                       <tr>
                         <th scope="col">(#) Id</th>
@@ -258,7 +258,7 @@ class LeadManagement extends Component {
                                   
                                   <i className="mdi mdi-chevron-down"></i>
                                 </DropdownToggle>
-                                <DropdownMenu>
+                                <DropdownMenu style={{transform: 'translate3d(0px, -110px, 0px)'}}>
                                   <DropdownItem
                                     onClick={() => {
                                       this.handleUpdate(

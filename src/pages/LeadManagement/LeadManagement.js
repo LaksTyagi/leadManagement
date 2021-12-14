@@ -15,6 +15,10 @@ import {
   DropdownItem,
   DropdownToggle,
   ButtonDropdown,
+  Modal,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
 } from "reactstrap";
 import { connect } from "react-redux";
 
@@ -23,6 +27,7 @@ import {
   changeEnquriy,
   changeProspects,
   changeNotIntrested,
+  changeTotalUser,
 } from "../../store/data/action";
 
 class LeadManagement extends Component {
@@ -37,7 +42,18 @@ class LeadManagement extends Component {
       singlebtn2: false,
       singlebtn3: false,
       singlebtn4: false,
+      addUser: {},
+      modelOpen: false,
+      addUserData:[]
     };
+  }
+
+  componentDidMount() {
+    if(this.props.data.totalUsers.length===0){
+
+      let userData = [{ id: 1, name: "sai",email:'sai@gmail.com', dispose: "", status: "",singleBtn:false }];
+      this.props.changeTotalUser(userData);
+    }
   }
 
   handleSubmit = () => {
@@ -61,8 +77,43 @@ class LeadManagement extends Component {
       let data = this.props.data.notIntrested + 1;
       this.props.changeNotIntrested(data);
     }
-    this.setState({dropdownChange1:'',dropdownChange2:'',dropdownChange3:'',dropdownChange4:''})
+    this.setState({
+      dropdownChange1: "",
+      dropdownChange2: "",
+      dropdownChange3: "",
+      dropdownChange4: "",
+    });
   };
+
+  handleUpdate = (id, comp, value) => {
+    console.log("dd", id);
+    let newData = this.props.data.totalUsers.map((val) => {
+      if (val.id === id) {
+        val[comp] = value;
+        if(comp!=='singleBtn') val.status = value;
+      }
+      return val;
+    });
+    console.log(newData);
+    this.props.changeTotalUser(newData);
+  };
+  handleModelUpdate = (id, comp, value) => {
+    console.log("dd", id);
+    let newData = [...this.props.data.totalUsers]
+
+    let a={...this.state.addUser}
+    a.id=id
+    a.singleBtn=false
+    a[comp]=value
+    newData.push(a)
+    this.setState({addUser:a,addUserData:newData})
+
+    console.log(a,newData);
+    // this.props.changeTotalUser(newData);
+  };
+  handleSubmitModel=()=>{
+    this.props.changeTotalUser(this.state.addUserData);
+  }
 
   render() {
     return (
@@ -71,14 +122,104 @@ class LeadManagement extends Component {
           <Col xl={12}>
             <Card>
               <CardBody>
-                <h4 className="card-title mb-4">USERS</h4>
+                <Row>
+                  <Col lg={6}>
+                    <h4 className="card-title mb-4">USERS</h4>
+                  </Col>
+                  <Col lg={6}>
+                    <div>
+                      <Button
+                        color="primary"
+                        onClick={() =>
+                          this.setState({ modelOpen: !this.state.modelOpen })
+                        }
+                        style={{ float: "right" }}
+                      >
+                        Add Lead
+                      </Button>
+                      <Modal
+                        isOpen={this.state.modelOpen}
+                        fullscreen="sm"
+                        toggle={() =>
+                          this.setState({ modelOpen: !this.state.modelOpen })
+                        }
+                      >
+                        <ModalHeader
+                          toggle={() =>
+                            this.setState({ modelOpen: !this.state.modelOpen })
+                          }
+                        >
+                          Add User
+                        </ModalHeader>
+                        <ModalBody>
+                          <Row>
+                            <Col lg={6}>
+                              <Input
+                                id="exampleEmail"
+                                name="email"
+                                placeholder="Enter Name"
+                                type="text"
+                                onChange={(e)=>this.handleModelUpdate(this.props.data.totalUsers.length+1,'name',e.target.value)}
+                              />
+                            </Col>
+                             <Col lg={6}>
+                              <Input
+                                id="exampleEmail"
+                                name="email"
+                                placeholder="Enter Email"
+                                type="email"
+                                onChange={(e)=>this.handleModelUpdate(this.props.data.totalUsers.length+1,'email',e.target.value)}
+
+                              />
+                            </Col>
+                            <br/>
+                             <Col lg={6}>
+                              <Input
+                                id="exampleEmail"
+                                name="email"
+                                placeholder="Enter name"
+                                type="file"
+                                onChange={(e)=>this.handleModelUpdate(this.props.data.totalUsers.length+1,'selectedFile',e.target.value)}
+
+                              />
+                            </Col>
+                          </Row>
+                        </ModalBody>
+                        <ModalFooter>
+                          <Button
+                            color="primary"
+                            onClick={() =>{
+                             this.handleSubmitModel()
+                              this.setState({
+                                modelOpen: !this.state.modelOpen,
+                              })
+                            }
+                            }
+                          >
+                            Submit
+                          </Button>{" "}
+                          <Button
+                            onClick={() =>
+                              this.setState({
+                                modelOpen: !this.state.modelOpen,
+                              })
+                            }
+                          >
+                            Cancel
+                          </Button>
+                        </ModalFooter>
+                      </Modal>
+                    </div>
+                  </Col>
+                </Row>
+
                 <div className="table-responsive">
                   <table className="table table-hover table-centered table-nowrap mb-0">
                     <thead>
                       <tr>
                         <th scope="col">(#) Id</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Date</th>
+
                         <th scope="col">Dispose</th>
                         <th scope="col" colSpan="2">
                           Status
@@ -86,316 +227,92 @@ class LeadManagement extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">#14256</th>
-                        <td>
-                          <div>
-                            <img
-                              src={user3}
-                              alt=""
-                              className="avatar-xs rounded-circle mr-2"
-                            />{" "}
-                            Philip Smead
-                          </div>
-                        </td>
-                        <td>15/1/2018</td>
-                        <td>
-                          {" "}
-                          <div className="col-sm-6">
-                            <Dropdown
-                              isOpen={this.state.singlebtn1}
-                              toggle={() => {
-                                this.setState({
-                                  singlebtn1: !this.state.singlebtn1,
-                                });
-                              }}
-                            >
-                              <DropdownToggle
-                                className="btn btn-secondary"
-                                caret
+                      {this.props.data.totalUsers?.map((val) => (
+                        <tr>
+                          <th scope="row">{val.id}</th>
+                          <td>
+                            <div>
+                              <img
+                                src={user3}
+                                alt=""
+                                className="avatar-xs rounded-circle mr-2"
+                              />{" "}
+                              {`${val.name} (${val.email})`}
+                            </div>
+                          </td>
+
+                          <td>
+                            {" "}
+                            <div className="col-sm-6">
+                              <Dropdown
+                                isOpen={val.singleBtn}
+                                toggle={() => {
+                                 this.handleUpdate(val.id,"singleBtn",!val.singleBtn)
+                                }}
                               >
-                                {this.state.dropdownChange1}{" "}
-                                <i className="mdi mdi-chevron-down"></i>
-                              </DropdownToggle>
-                              <DropdownMenu>
-                                <DropdownItem
-                                  onClick={() =>
-                                    this.setState({
-                                      dropdownChange1: "Enquiry",
-                                    })
-                                  }
+                                <DropdownToggle
+                                  className="btn btn-secondary"
+                                  caret
                                 >
-                                  Enquiry
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() =>
-                                    this.setState({
-                                      dropdownChange1: "Prospects",
-                                    })
-                                  }
-                                >
-                                  Prospects
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() =>
-                                    this.setState({
-                                      dropdownChange1: "Not Intrested",
-                                    })
-                                  }
-                                >
-                                  Not Intrested
-                                </DropdownItem>
-                              </DropdownMenu>
-                            </Dropdown>
-                          </div>
-                        </td>
-                        <td>
-                          <span className="badge badge-success">Delivered</span>
-                        </td>
-                        <td>
-                          <div>
-                            <Button
-                              className="btn btn-primary btn-sm"
-                              onClick={() => this.handleSubmit()}
-                            >
-                              Submit
-                            </Button>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">#14256</th>
-                        <td>
-                          <div>
-                            <img
-                              src={user2}
-                              alt=""
-                              className="avatar-xs rounded-circle mr-2"
-                            />{" "}
-                            Philip Smead
-                          </div>
-                        </td>
-                        <td>15/1/2018</td>
-                        <td>
-                          {" "}
-                          <div className="col-sm-6">
-                            <Dropdown
-                              isOpen={this.state.singlebtn2}
-                              toggle={() => {
-                                this.setState({
-                                  singlebtn2: !this.state.singlebtn2,
-                                });
-                              }}
-                            >
-                              <DropdownToggle
-                                className="btn btn-secondary"
-                                caret
+                                  {val.dispose}
+                                  
+                                  <i className="mdi mdi-chevron-down"></i>
+                                </DropdownToggle>
+                                <DropdownMenu>
+                                  <DropdownItem
+                                    onClick={() => {
+                                      this.handleUpdate(
+                                        val.id,
+                                        "dispose",
+                                        "Enquiry"
+                                      );
+                                    }}
+                                  >
+                                    Enquiry
+                                  </DropdownItem>
+                                  <DropdownItem
+                                    onClick={() =>
+                                      this.handleUpdate(
+                                        val.id,
+                                        "dispose",
+                                        "Prospects"
+                                      )
+                                    }
+                                  >
+                                    Prospects
+                                  </DropdownItem>
+                                  <DropdownItem
+                                    onClick={() =>
+                                      this.handleUpdate(
+                                        val.id,
+                                        "dispose",
+                                        "Not Intrested"
+                                      )
+                                    }
+                                  >
+                                    Not Intrested
+                                  </DropdownItem>
+                                </DropdownMenu>
+                              </Dropdown>
+                            </div>
+                          </td>
+                          <td>
+                            <span className="badge badge-success">
+                              {val.status}
+                            </span>
+                          </td>
+                          <td>
+                            <div>
+                              <Link to="#"
+                                className="btn btn-primary btn-sm"
+                                // onClick={() => this.handleSubmit()}
                               >
-                                {this.state.dropdownChange2}{" "}
-                                <i className="mdi mdi-chevron-down"></i>
-                              </DropdownToggle>
-                              <DropdownMenu>
-                                <DropdownItem
-                                  onClick={() =>
-                                    this.setState({
-                                      dropdownChange2: "Enquiry",
-                                    })
-                                  }
-                                >
-                                  Enquiry
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() =>
-                                    this.setState({
-                                      dropdownChange2: "Prospects",
-                                    })
-                                  }
-                                >
-                                  Prospects
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() =>
-                                    this.setState({
-                                      dropdownChange2: "Not Intrested",
-                                    })
-                                  }
-                                >
-                                  Not Intrested
-                                </DropdownItem>
-                              </DropdownMenu>
-                            </Dropdown>
-                          </div>
-                        </td>
-                        <td>
-                          <span className="badge badge-success">Delivered</span>
-                        </td>
-                        <td>
-                          <div>
-                            <Button
-                              className="btn btn-primary btn-sm"
-                              onClick={() => this.handleSubmit()}
-                            >
-                              Submit
-                            </Button>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">#14256</th>
-                        <td>
-                          <div>
-                            <img
-                              src={user4}
-                              alt=""
-                              className="avatar-xs rounded-circle mr-2"
-                            />{" "}
-                            Philip Smead
-                          </div>
-                        </td>
-                        <td>15/1/2018</td>
-                        <td>
-                          {" "}
-                          <div className="col-sm-6">
-                            <Dropdown
-                              isOpen={this.state.singlebtn3}
-                              toggle={() => {
-                                this.setState({
-                                  singlebtn3: !this.state.singlebtn3,
-                                });
-                              }}
-                            >
-                              <DropdownToggle
-                                className="btn btn-secondary"
-                                caret
-                              >
-                                {this.state.dropdownChange3}{" "}
-                                <i className="mdi mdi-chevron-down"></i>
-                              </DropdownToggle>
-                              <DropdownMenu>
-                                <DropdownItem
-                                  onClick={() =>
-                                    this.setState({
-                                      dropdownChange3: "Enquiry",
-                                    })
-                                  }
-                                >
-                                  Enquiry
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() =>
-                                    this.setState({
-                                      dropdownChange3: "Prospects",
-                                    })
-                                  }
-                                >
-                                  Prospects
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() =>
-                                    this.setState({
-                                      dropdownChange3: "Not Intrested",
-                                    })
-                                  }
-                                >
-                                  Not Intrested
-                                </DropdownItem>
-                              </DropdownMenu>
-                            </Dropdown>
-                          </div>
-                        </td>
-                        <td>
-                          <span className="badge badge-success">Delivered</span>
-                        </td>
-                        <td>
-                          <div>
-                            <Button
-                              className="btn btn-primary btn-sm"
-                              onClick={() => this.handleSubmit()}
-                            >
-                              Submit
-                            </Button>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">#14256</th>
-                        <td>
-                          <div>
-                            <img
-                              src={user5}
-                              alt=""
-                              className="avatar-xs rounded-circle mr-2"
-                            />{" "}
-                            Philip Smead
-                          </div>
-                        </td>
-                        <td>15/1/2018</td>
-                        <td>
-                          {" "}
-                          <div className="col-sm-6">
-                            <Dropdown
-                              isOpen={this.state.singlebtn4}
-                              toggle={() => {
-                                this.setState({
-                                  singlebtn4: !this.state.singlebtn4,
-                                });
-                              }}
-                            >
-                              <DropdownToggle
-                                className="btn btn-secondary"
-                                caret
-                              >
-                                {this.state.dropdownChange4}{" "}
-                                <i className="mdi mdi-chevron-down"></i>
-                              </DropdownToggle>
-                              <DropdownMenu
-                                onChange={(event) => console.log(event)}
-                              >
-                                <DropdownItem
-                                  onClick={() =>
-                                    this.setState({
-                                      dropdownChange4: "Enquiry",
-                                    })
-                                  }
-                                >
-                                  Enquiry
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() =>
-                                    this.setState({
-                                      dropdownChange4: "Prospects",
-                                    })
-                                  }
-                                >
-                                  Prospects
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() =>
-                                    this.setState({
-                                      dropdownChange4: "Not Intrested",
-                                    })
-                                  }
-                                >
-                                  Not Intrested
-                                </DropdownItem>
-                              </DropdownMenu>
-                            </Dropdown>
-                          </div>
-                        </td>
-                        <td>
-                          <span className="badge badge-success">Delivered</span>
-                        </td>
-                        <td>
-                          <div>
-                            <Button
-                              className="btn btn-primary btn-sm"
-                              onClick={() => this.handleSubmit()}
-                            >
-                              Submit
-                            </Button>
-                          </div>
-                        </td>
-                      </tr>
+                               Edit
+                              </Link>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -414,6 +331,7 @@ const mapDispatchToProps = (dispatch) => {
     changeEnquriy: (data) => dispatch(changeEnquriy(data)),
     changeProspects: (data) => dispatch(changeProspects(data)),
     changeNotIntrested: (data) => dispatch(changeNotIntrested(data)),
+    changeTotalUser: (data) => dispatch(changeTotalUser(data)),
   };
 };
 const mapStateToProps = (state) => ({

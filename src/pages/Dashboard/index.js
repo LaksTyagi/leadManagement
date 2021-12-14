@@ -68,10 +68,10 @@ class Dashboard extends Component {
                       <img src={servicesIcon1} alt="" />
                     </div>
                     <h5 className="font-size-16 text-uppercase mt-0 text-white-50">
-                    Enquiry
+                    Total Leads
                     </h5>
                     <h4 className="font-weight-medium font-size-24">
-                      {this.props.data.enquiry}
+                      {this.props.data?.totalUsers?.length}
                       <i className="mdi mdi-arrow-up text-success ml-2"></i>
                     </h4>
                     <div className="mini-stat-label bg-success">
@@ -97,7 +97,7 @@ class Dashboard extends Component {
                       <img src={servicesIcon2} alt="" />
                     </div>
                     <h5 className="font-size-16 text-uppercase mt-0 text-white-50">
-                    Prospects
+                    Total Sales
                     </h5>
                     <h4 className="font-weight-medium font-size-24">
                     {this.props.data.prospects}
@@ -127,7 +127,37 @@ class Dashboard extends Component {
                       <img src={servicesIcon3} alt="" />
                     </div>
                     <h5 className="font-size-16 text-uppercase mt-0 text-white-50">
-                    Not Intrested
+                    Complains
+                    </h5>
+                    <h4 className="font-weight-medium font-size-24">
+                    {this.props.data.notIntrested}
+                      <i className="mdi mdi-arrow-up text-success ml-2"></i>
+                    </h4>
+                    <div className="mini-stat-label bg-info">
+                      <p className="mb-0"> 00%</p>
+                    </div>
+                  </div>
+                  <div className="pt-2">
+                    <div className="float-right">
+                      <Link to="#" className="text-white-50">
+                        <i className="mdi mdi-arrow-right h5"></i>
+                      </Link>
+                    </div>
+
+                    <p className="text-white-50 mb-0 mt-1">Since last month</p>
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col xl={4} md={6}>
+              <Card className="mini-stat bg-primary text-white">
+                <CardBody>
+                  <div className="mb-4">
+                    <div className="float-left mini-stat-img mr-4">
+                      <img src={servicesIcon3} alt="" />
+                    </div>
+                    <h5 className="font-size-16 text-uppercase mt-0 text-white-50">
+                    Total Quotations
                     </h5>
                     <h4 className="font-weight-medium font-size-24">
                     {this.props.data.notIntrested}
@@ -158,17 +188,17 @@ class Dashboard extends Component {
                 <CardBody>
                   <h4 className="card-title mb-4">Monthly Earning</h4>
                   <Row>
-                    <Col lg={7}>
+                    <Col lg={9}>
                       <div>
                         <LineAreaChart />
                       </div>
                     </Col>
-                    <Col lg={5}>
+                    <Col lg={3}>
                       <Row>
-                        <Col md={6}>
+                        <Col md={12}>
                           <div className="text-center">
-                            <p className="text-muted mb-4">This month</p>
-                            <h3>$34,252</h3>
+                            <h3 className="text-muted mb-4">This month</h3>
+                           
                             <p className="text-muted mb-5">
                               It will be as simple as in fact it will be
                               occidental.
@@ -176,17 +206,7 @@ class Dashboard extends Component {
                             <RadialChart />
                           </div>
                         </Col>
-                        <Col md={6}>
-                          <div className="text-center">
-                            <p className="text-muted mb-4">Last month</p>
-                            <h3>$36,253</h3>
-                            <p className="text-muted mb-5">
-                              It will be as simple as in fact it will be
-                              occidental.
-                            </p>
-                            <Apexdonut />
-                          </div>
-                        </Col>
+                       
                       </Row>
                     </Col>
                   </Row>
@@ -205,7 +225,7 @@ class Dashboard extends Component {
                       <i className="mdi mdi-calendar mr-1 text-primary"></i> Jan
                       01 - Jan 31
                     </p>
-                    <h5 className="font-18 text-right">$4230</h5>
+                    {/* <h5 className="font-18 text-right">$4230</h5> */}
                   </div>
                   <div id="ct-donut" className="ct-chart wid pt-4">
                     <Salesdonut />
@@ -240,57 +260,7 @@ class Dashboard extends Component {
                 </CardBody>
               </Card>
             </Col>
-            <Col xl={6}>
-              <Card>
-                <CardBody>
-                  <h4 className="card-title mb-4">Activity</h4>
-                  <ol className="activity-feed">
-                    <li className="feed-item">
-                      <div className="feed-item-list">
-                        <span className="date">Jan 22</span>
-                        <span className="activity-text">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-optio, eaque rerum! Provid
-                        </span>
-                      </div>
-                    </li>
-                    <li className="feed-item">
-                      <div className="feed-item-list">
-                        <span className="date">Jan 20</span>
-                        <span className="activity-text">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-optio, eaque rerum! Provid
-                          <Link to="#" className="text-success">
-                            Read more
-                          </Link>
-                        </span>
-                      </div>
-                    </li>
-                    <li className="feed-item">
-                      <div className="feed-item-list">
-                        <span className="date">Jan 19</span>
-                        <span className="activity-text">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-optio, eaque rerum! Provid
-                        </span>
-                      </div>
-                    </li>
-                   
-                  </ol>
-                  <div className="text-center">
-                    <Link to="#" className="btn btn-primary">
-                      Load More
-                    </Link>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
+           
           </Row>
 
           

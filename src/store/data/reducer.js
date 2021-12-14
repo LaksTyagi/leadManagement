@@ -2,13 +2,14 @@
 import {
     CHANGE_ENQURIY,
      CHANGE_PROSPECTS,
-     CHANGE_NOT_INTRESTED 
+     CHANGE_NOT_INTRESTED ,TOTAL_USER
   } from "./type";
   
   const INIT_STATE = {
     enquiry:0,
     prospects:0,
-    notIntrested:0
+    notIntrested:0,
+    totalUsers:[]
   };
   
   const Layout = (state = INIT_STATE, action) => {
@@ -28,7 +29,12 @@ import {
           ...state,
           notIntrested: action.payload
         };
-      
+        case TOTAL_USER:
+          return {
+            ...state,
+            totalUsers: action.payload
+          };
+        
       default:
         return state;
     }

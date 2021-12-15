@@ -13,6 +13,7 @@ import logodarkImg from "../../assets/images/logo-dark.png";
 import logosmImg from "../../assets/images/logo-sm.png";
 import logolightImg from "../../assets/images/logo-light.png";
 import user4 from '../../assets/images/users/user-4.jpg';
+import yog from '../../assets/images/yog.jpeg'
 
 
 // Import other Dropdown
@@ -95,10 +96,10 @@ class TopBar extends Component {
 
                 <Link to="/dashboard" className="logo logo-light">
                   <span className="logo-sm">
-                    <img src={user4} alt="" height="22" />
+                    <img src={yog} alt="" height="22" />
                   </span>
                   <span className="logo-lg">
-                    <img src={user4} alt="" height="50" />LOGO
+                    <img src={yog} alt="" height="50" />
                   </span>
                 </Link>
               </div>

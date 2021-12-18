@@ -1,7 +1,7 @@
 import {
     CHANGE_ENQURIY,
      CHANGE_PROSPECTS,
-     CHANGE_NOT_INTRESTED ,TOTAL_USER
+     CHANGE_NOT_INTRESTED ,TOTAL_USER,USER_REGISTER
   } from "./type";
   
   export const changeEnquriy = data => ({
@@ -25,3 +25,8 @@ import {
     payload: data
   });
   
+
+  export const handleRegisterData = data => ({
+    type: USER_REGISTER,
+    payload: data
+  });

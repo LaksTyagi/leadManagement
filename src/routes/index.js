@@ -12,10 +12,10 @@ const authProtectedRoutes = [
   
   { path: "/leadManagement", component: LeadManagement },
   { path: "/dashboard", component: Dashboard },
-  {path:"/login", component: Login},
-  {path:"/register", component: Register},
-  {path:"/forgotPassword", component: ForgotPassword},
-  { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> }
+  {path:"/login", component: Login,nav:true},
+  {path:"/register", component: Register,nav:true},
+  {path:"/forgotPassword", component: ForgotPassword,nav:true},
+  { path: "/", exact: true, component: () => <Redirect to="/login" /> }
 ];
 
 

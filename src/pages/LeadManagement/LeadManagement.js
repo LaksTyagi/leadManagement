@@ -44,14 +44,22 @@ class LeadManagement extends Component {
       singlebtn4: false,
       addUser: {},
       modelOpen: false,
-      addUserData:[]
+      addUserData: [],
     };
   }
 
   componentDidMount() {
-    if(this.props.data.totalUsers.length===0){
-
-      let userData = [{ id: 1, name: "sai",email:'sai@gmail.com', dispose: "", status: "",singleBtn:false }];
+    if (this.props.data.totalUsers.length === 0) {
+      let userData = [
+        {
+          id: 1,
+          name: "sai",
+          email: "sai@gmail.com",
+          dispose: "",
+          status: "",
+          singleBtn: false,
+        },
+      ];
       this.props.changeTotalUser(userData);
     }
   }
@@ -90,7 +98,7 @@ class LeadManagement extends Component {
     let newData = this.props.data.totalUsers.map((val) => {
       if (val.id === id) {
         val[comp] = value;
-        if(comp!=='singleBtn') val.status = value;
+        if (comp !== "singleBtn") val.status = value;
       }
       return val;
     });
@@ -99,21 +107,21 @@ class LeadManagement extends Component {
   };
   handleModelUpdate = (id, comp, value) => {
     console.log("dd", id);
-    let newData = [...this.props.data.totalUsers]
+    let newData = [...this.props.data.totalUsers];
 
-    let a={...this.state.addUser}
-    a.id=id
-    a.singleBtn=false
-    a[comp]=value
-    newData.push(a)
-    this.setState({addUser:a,addUserData:newData})
+    let a = { ...this.state.addUser };
+    a.id = id;
+    a.singleBtn = false;
+    a[comp] = value;
+    newData.push(a);
+    this.setState({ addUser: a, addUserData: newData });
 
-    console.log(a,newData);
+    console.log(a, newData);
     // this.props.changeTotalUser(newData);
   };
-  handleSubmitModel=()=>{
+  handleSubmitModel = () => {
     this.props.changeTotalUser(this.state.addUserData);
-  }
+  };
 
   render() {
     return (
@@ -155,32 +163,88 @@ class LeadManagement extends Component {
                           <Row>
                             <Col lg={6}>
                               <Input
-                                id="exampleEmail"
-                                name="email"
                                 placeholder="Enter Name"
                                 type="text"
-                                onChange={(e)=>this.handleModelUpdate(this.props.data.totalUsers.length+1,'name',e.target.value)}
+                                onChange={(e) =>
+                                  this.handleModelUpdate(
+                                    this.props.data.totalUsers.length + 1,
+                                    "name",
+                                    e.target.value
+                                  )
+                                }
                               />
                             </Col>
-                             <Col lg={6}>
+                            <Col lg={6}>
                               <Input
-                                id="exampleEmail"
-                                name="email"
                                 placeholder="Enter Email"
                                 type="email"
-                                onChange={(e)=>this.handleModelUpdate(this.props.data.totalUsers.length+1,'email',e.target.value)}
-
+                                onChange={(e) =>
+                                  this.handleModelUpdate(
+                                    this.props.data.totalUsers.length + 1,
+                                    "email",
+                                    e.target.value
+                                  )
+                                }
                               />
                             </Col>
-                            <br/>
-                             <Col lg={6}>
+                            <Col lg={6}>
                               <Input
-                                id="exampleEmail"
-                                name="email"
-                                placeholder="Enter name"
+                                placeholder="Enter DOB"
+                                type="date"
+                                onChange={(e) =>
+                                  this.handleModelUpdate(
+                                    this.props.data.totalUsers.length + 1,
+                                    "Dob",
+                                    e.target.value
+                                  )
+                                }
+                              />
+                            </Col>
+                            <Col lg={6}>
+                              <Input
+                                placeholder="Enter Phone number"
+                                type="tel"
+                                onChange={(e) =>
+                                  this.handleModelUpdate(
+                                    this.props.data.totalUsers.length + 1,
+                                    "phone",
+                                    e.target.value
+                                  )
+                                }
+                              />
+                            </Col>
+                            <Col lg={6}>
+                              <Input
+                                type="select"
+                                placeholder="source"
+                                value="Lead Source"
+                                onChange={(e) =>
+                                  this.handleModelUpdate(
+                                    this.props.data.totalUsers.length + 1,
+                                    "source",
+                                    e.target.value
+                                  )
+                                }
+                              >
+                                <option disabled={true} value="Lead Source">
+                                  Lead Source
+                                </option>
+                                <option value="Just Dial">Just Dial</option>
+                                <option value="Indian Mart">Indian Mart</option>
+                                <option value="News Paper">News Paper</option>
+                                <option value="Website">Website</option>
+                              </Input>
+                            </Col>
+                            <Col lg={6}>
+                              <Input
                                 type="file"
-                                onChange={(e)=>this.handleModelUpdate(this.props.data.totalUsers.length+1,'selectedFile',e.target.value)}
-
+                                onChange={(e) =>
+                                  this.handleModelUpdate(
+                                    this.props.data.totalUsers.length + 1,
+                                    "selectedFile",
+                                    e.target.value
+                                  )
+                                }
                               />
                             </Col>
                           </Row>
@@ -188,13 +252,12 @@ class LeadManagement extends Component {
                         <ModalFooter>
                           <Button
                             color="primary"
-                            onClick={() =>{
-                             this.handleSubmitModel()
+                            onClick={() => {
+                              this.handleSubmitModel();
                               this.setState({
                                 modelOpen: !this.state.modelOpen,
-                              })
-                            }
-                            }
+                              });
+                            }}
                           >
                             Submit
                           </Button>{" "}
@@ -213,8 +276,8 @@ class LeadManagement extends Component {
                   </Col>
                 </Row>
 
-                <div className="table-responsive" style={{ height:"25rem"}}>
-                  <table className="table table-hover table-centered table-nowrap mb-0" >
+                <div className="table-responsive" style={{ height: "25rem" }}>
+                  <table className="table table-hover table-centered table-nowrap mb-0">
                     <thead>
                       <tr>
                         <th scope="col">(#) Id</th>
@@ -247,7 +310,11 @@ class LeadManagement extends Component {
                               <Dropdown
                                 isOpen={val.singleBtn}
                                 toggle={() => {
-                                 this.handleUpdate(val.id,"singleBtn",!val.singleBtn)
+                                  this.handleUpdate(
+                                    val.id,
+                                    "singleBtn",
+                                    !val.singleBtn
+                                  );
                                 }}
                               >
                                 <DropdownToggle
@@ -255,10 +322,14 @@ class LeadManagement extends Component {
                                   caret
                                 >
                                   {val.dispose}
-                                  
+
                                   <i className="mdi mdi-chevron-down"></i>
                                 </DropdownToggle>
-                                <DropdownMenu style={{transform: 'translate3d(0px, -110px, 0px)'}}>
+                                <DropdownMenu
+                                  style={{
+                                    transform: "translate3d(0px, -110px, 0px)",
+                                  }}
+                                >
                                   <DropdownItem
                                     onClick={() => {
                                       this.handleUpdate(
@@ -303,11 +374,12 @@ class LeadManagement extends Component {
                           </td>
                           <td>
                             <div>
-                              <Link to="#"
+                              <Link
+                                to="#"
                                 className="btn btn-primary btn-sm"
                                 // onClick={() => this.handleSubmit()}
                               >
-                               Edit
+                                Edit
                               </Link>
                             </div>
                           </td>

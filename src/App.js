@@ -53,6 +53,7 @@ class App extends Component {
                 component={route.component}
                 key={idx}
                 isAuthProtected={true}
+                nav={route.nav}
               />
             ))}
           </Switch>

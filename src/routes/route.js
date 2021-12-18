@@ -6,7 +6,7 @@ import { Route, Redirect } from "react-router-dom";
 const AppRoute = ({
   component: Component,
   layout: Layout,
-  isAuthProtected,
+  isAuthProtected,nav,
   ...rest
 }) => (
   <Route
@@ -17,6 +17,11 @@ const AppRoute = ({
           <Redirect
             to={{ pathname: "/", state: { from: props.location } }}
           />
+        );
+      }
+      if(nav){
+        return (
+          <Component {...props} />
         );
       }
 

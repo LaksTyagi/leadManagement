@@ -9,6 +9,7 @@ import Register from '../pages/RegisterPage'
 import ForgotPassword from '../pages/RecoverPassword'
 import AddLead from '../pages/LeadManagement/AddLead'
 import Users from "../pages/Users"
+import ShowLeads from '../pages/LeadManagement/ShowLeads'
 
 const authProtectedRoutes = [
   
@@ -16,6 +17,8 @@ const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
   { path: "/add_lead", component: AddLead },
   { path: "/users", component: Users },
+  { path: "/show_lead/:id", component: ShowLeads },
+
 
   {path:"/login", component: Login,nav:true},
   {path:"/register", component: Register,nav:true},

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import SettingMenu from "../Shared/SettingMenu";
 import { Row, Col, Button, Input, Card, CardBody } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link,withRouter } from "react-router-dom";
 
 import user2 from "../../assets/images/users/user-2.jpg";
 import user3 from "../../assets/images/users/user-3.jpg";
@@ -30,7 +30,10 @@ import {
   changeTotalUser,
 } from "../../store/data/action";
 
+// const histoy=useHistory()
+
 class LeadManagement extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -116,6 +119,11 @@ class LeadManagement extends Component {
     this.props.changeTotalUser(this.state.addUserData);
   };
 
+  handleistory = (id) => {
+    // let history = useHistory();
+    this.props.history.push(`/show_lead/${id}`)
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -151,7 +159,7 @@ class LeadManagement extends Component {
                         <th scope="col">(#) Id</th>
                         <th scope="col">Name</th>
 
-                        <th scope="col">Company Name</th>
+                        <th scope="col">Service packages</th>
                         <th scope="col" colSpan="2">
                           Status
                         </th>
@@ -159,7 +167,7 @@ class LeadManagement extends Component {
                     </thead>
                     <tbody>
                       {this.props.data.leads?.map((val) => (
-                        <tr>
+                        <tr onClick={()=>this.handleistory(val.id)}>
                           <th scope="row">{val.id}</th>
                           <td>
                             <div>
@@ -175,7 +183,7 @@ class LeadManagement extends Component {
                         
                           <td>
                             <span >
-                              {val.companyName}
+                              {val.servicePackages}
                             </span>
                           </td>
                           <td>
@@ -221,4 +229,4 @@ const mapStateToProps = (state) => ({
   data: state.Data,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LeadManagement);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LeadManagement));

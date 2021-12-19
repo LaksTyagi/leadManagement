@@ -30,25 +30,24 @@ import {
   changeTotalUser,leadDataAdd
 } from "../../store/data/action";
 
-class AddLead extends Component {
+class ShowLeads extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dropdownChange1: "",
-      dropdownChange2: "",
-      dropdownChange3: "",
-      dropdownChange4: "",
-      singlebtn1: false,
-      singlebtn2: false,
-      singlebtn3: false,
-      singlebtn4: false,
+      
       addUser: {},
       modelOpen: false,
       addUserData: [],
+      selectedObj:[],
+      disableUpdate:true
     };
   }
 
   componentDidMount() {
+    const leadId=window.location.pathname.split('/')[2];
+    let selectedObj=this.props.data.leads.filter(a=>Number(a.id)===Number(leadId));
+    this.setState({selectedObj: selectedObj})
+
     if (this.props.data.leads.length === 0) {
       let userData = [
         
@@ -57,34 +56,7 @@ class AddLead extends Component {
     }
   }
 
-  handleSubmit = () => {
-    if (
-      this.state.dropdownChange1 === "Enquiry" ||
-      this.state.dropdownChange2 === "Enquiry" ||
-      this.state.dropdownChange3 === "Enquiry" ||
-      this.state.dropdownChange4 === "Enquiry"
-    ) {
-      let data = this.props.data.enquiry + 1;
-      this.props.changeEnquriy(data);
-    } else if (
-      this.state.dropdownChange1 === "Prospects" ||
-      this.state.dropdownChange2 === "Prospects" ||
-      this.state.dropdownChange3 === "Prospects" ||
-      this.state.dropdownChange4 === "Prospects"
-    ) {
-      let data = this.props.data.prospects + 1;
-      this.props.changeProspects(data);
-    } else {
-      let data = this.props.data.notIntrested + 1;
-      this.props.changeNotIntrested(data);
-    }
-    this.setState({
-      dropdownChange1: "",
-      dropdownChange2: "",
-      dropdownChange3: "",
-      dropdownChange4: "",
-    });
-  };
+ 
 
   handleUpdate = (id, comp, value) => {
     console.log("dd", id);
@@ -100,14 +72,21 @@ class AddLead extends Component {
   };
   handleModelUpdate = (id, comp, value) => {
     console.log("dd", id);
-    let newData = [...this.props.data.leads];
-
-    let a = { ...this.state.addUser };
+    
+    let a = { ...this.state.selectedObj[0] };
     a.id = id;
     a.singleBtn = false;
     a[comp] = value;
-    newData.push(a);
-    this.setState({ addUser: a, addUserData: newData });
+    
+    let newData = this.props.data.leads.map(obj=>{
+      if(Number(id)===Number(obj.id)){
+        return a
+      }
+      else return obj
+    });
+
+    // newData.push(a);
+    this.setState({ selectedObj: [a], addUserData: newData,disableUpdate:false });
 
     console.log(a, newData);
     // this.props.changeTotalUser(newData);
@@ -122,19 +101,21 @@ class AddLead extends Component {
         <Row>
           <Col xl={12}>
             <Card>
-              <CardBody>
+              {this.state.selectedObj?.map(obj=>(
+                 <CardBody>
                   <h2 style={{padding:"15px"}}>Customer Personal Details</h2>
                   
                 <Row>
-                  
+                 
                   <Col lg={6}>
                     <Input
                       style={{ marginBottom: "10px" }}
                       placeholder="First Name"
+                      value={obj?.firstName}
                       type="text"
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "firstName",
                           e.target.value
                         )
@@ -145,10 +126,11 @@ class AddLead extends Component {
                     <Input
                       style={{ marginBottom: "10px" }}
                       placeholder="Last Name"
+                      value={obj?.lastName}
                       type="text"
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "lastName",
                           e.target.value
                         )
@@ -159,10 +141,11 @@ class AddLead extends Component {
                     <Input  
                       style={{ marginBottom: "10px" }}
                       placeholder="Mobile No."
+                      value={obj?.mobileNo}
                       type="tel"
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "mobileNo",
                           e.target.value
                         )
@@ -173,10 +156,11 @@ class AddLead extends Component {
                     <Input
                       style={{ marginBottom: "10px" }}
                       placeholder="Enter Email"
+                      value={obj?.email}
                       type="email"
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "email",
                           e.target.value
                         )
@@ -188,6 +172,7 @@ class AddLead extends Component {
                     <Input
                       style={{ marginBottom: "10px" }}
                       placeholder="Service packages"
+                      value={obj?.servicePackages}
                       type="text"
                       onChange={(e) =>
                         this.handleModelUpdate(
@@ -206,10 +191,11 @@ class AddLead extends Component {
                     <Input  
                       style={{ marginBottom: "10px" }}
                       placeholder="Address"
+                      value={obj?.address}
                       type="text"
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "address",
                           e.target.value
                         )
@@ -220,10 +206,11 @@ class AddLead extends Component {
                     <Input
                       style={{ marginBottom: "10px" }}
                       placeholder="Area"
+                      value={obj?.area}
                       type="text"
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "area",
                           e.target.value
                         )
@@ -234,10 +221,11 @@ class AddLead extends Component {
                     <Input
                       style={{ marginBottom: "10px" }}
                       placeholder="country"
+                      value={obj?.country}
                       type="text"
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "country",
                           e.target.value
                         )
@@ -248,10 +236,11 @@ class AddLead extends Component {
                     <Input
                       style={{ marginBottom: "10px" }}
                       placeholder="City"
+                      value={obj?.city}
                       type="text"
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "city",
                           e.target.value
                         )
@@ -262,10 +251,11 @@ class AddLead extends Component {
                     <Input
                       style={{ marginBottom: "10px" }}
                       placeholder="State"
+                      value={obj?.state}
                       type="text"
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "state",
                           e.target.value
                         )
@@ -277,10 +267,11 @@ class AddLead extends Component {
                     <Input
                       style={{ marginBottom: "10px" }}
                       placeholder="Pincode"
+                      value={obj?.pincode}
                       type="text"
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "pincode",
                           e.target.value
                         )
@@ -295,10 +286,11 @@ class AddLead extends Component {
                     <Input  
                       style={{ marginBottom: "10px" }}
                       placeholder="Inquiry Date"
+                      value={obj?.inquiryDate}
                       type="date"
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "inquiryDate",
                           e.target.value
                         )
@@ -310,9 +302,10 @@ class AddLead extends Component {
                       style={{ marginBottom: "10px" }}
                       placeholder="Inquiry Time"
                       type="time"
+                      value={obj?.inquiryTime}
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "inquiryTime",
                           e.target.value
                         )
@@ -322,15 +315,15 @@ class AddLead extends Component {
                   
                   
                   <Col lg={6}>
-                    <label>Lead Source</label>
                     <Input
                       style={{ marginBottom: "10px" }}
                       type="select"
+                     
                       placeholder="source"
-                      // value="Lead Source"
+                      value={obj?.source || "Lead Source"}
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "source",
                           e.target.value
                         )
@@ -346,15 +339,15 @@ class AddLead extends Component {
                     </Input>
                   </Col>
                   <Col lg={6}>
-                    <label>Lead Alloated To</label>
                     <Input
                       style={{ marginBottom: "10px" }}
                       type="select"
+                     
                       placeholder="source"
-                      // value="Lead Alloated To"
+                      value={obj?.leadAllotedTo || "Lead Alloated To"}
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "leadAllotedTo",
                           e.target.value
                         )
@@ -369,15 +362,15 @@ class AddLead extends Component {
                       <option value="Hisma">Hisma</option>
                     </Input>
                   </Col> <Col lg={6}>
-                    <label>Lead Status</label>
                     <Input
                       style={{ marginBottom: "10px" }}
                       type="select"
+                      
                       placeholder="source"
-                      // value="Lead Status"
+                      value={obj?.leadStatus || "Lead Status"}
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "leadStatus",
                           e.target.value
                         )
@@ -391,17 +384,17 @@ class AddLead extends Component {
                       <option value="Not intrested">Not intrested</option>
                       <option value="Money issue">Money issue</option>
                       <option value="Wrong number">Wrong number</option>
-
                     </Input>
                   </Col>
                   <Col lg={6}>
                     <Input
                       style={{ marginBottom: "10px" }}
                       placeholder="Requirement"
+                      value={obj?.requriement}
                       type="textarea"
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "requriement",
                           e.target.value
                         )
@@ -416,10 +409,11 @@ class AddLead extends Component {
                     <Input  
                       style={{ marginBottom: "10px" }}
                       placeholder="Follow Up Date"
+                      value={obj?.followUpDate}
                       type="date"
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "followUpDate",
                           e.target.value
                         )
@@ -431,9 +425,10 @@ class AddLead extends Component {
                       style={{ marginBottom: "10px" }}
                       placeholder="Follow Up Time"
                       type="time"
+                      value={obj?.followUpTime}
                       onChange={(e) =>
                         this.handleModelUpdate(
-                          this.props.data.leads.length + 1,
+                          obj.id,
                           "followUpTime",
                           e.target.value
                         )
@@ -443,13 +438,16 @@ class AddLead extends Component {
                 </Row>
                 <Link to="/leadManagement"><Button
                         color="primary"
+                        disabled={this.state.disableUpdate}
                         onClick={() =>this.handleSubmitModel()}
                         style={{ float: "right" }}
                       >
-                        Submit
+                        Update
                       </Button></Link>
                 
               </CardBody>
+              ))}
+             
             </Card>
           </Col>
         </Row>
@@ -472,4 +470,4 @@ const mapStateToProps = (state) => ({
   data: state.Data,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddLead);
+export default connect(mapStateToProps, mapDispatchToProps)(ShowLeads);

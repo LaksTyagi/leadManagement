@@ -127,7 +127,7 @@ class Dashboard extends Component {
                       <img src={servicesIcon3} alt="" />
                     </div>
                     <h5 className="font-size-16 text-uppercase mt-0 text-white-50">
-                    Complains
+                    Prospects
                     </h5>
                     <h4 className="font-weight-medium font-size-24">
                     {this.props.data.notIntrested}
@@ -157,7 +157,7 @@ class Dashboard extends Component {
                       <img src={servicesIcon3} alt="" />
                     </div>
                     <h5 className="font-size-16 text-uppercase mt-0 text-white-50">
-                    Total Quotations
+                    Call back
                     </h5>
                     <h4 className="font-weight-medium font-size-24">
                     {this.props.data.notIntrested}
@@ -179,7 +179,36 @@ class Dashboard extends Component {
                 </CardBody>
               </Card>
             </Col>
-           
+            <Col xl={4} md={6}>
+              <Card className="mini-stat bg-primary text-white">
+                <CardBody>
+                  <div className="mb-4">
+                    <div className="float-left mini-stat-img mr-4">
+                      <img src={servicesIcon3} alt="" />
+                    </div>
+                    <h5 className="font-size-16 text-uppercase mt-0 text-white-50">
+                    Not interested
+                    </h5>
+                    <h4 className="font-weight-medium font-size-24">
+                    {this.props.data.notIntrested}
+                      <i className="mdi mdi-arrow-up text-success ml-2"></i>
+                    </h4>
+                    <div className="mini-stat-label bg-info">
+                      <p className="mb-0"> 00%</p>
+                    </div>
+                  </div>
+                  <div className="pt-2">
+                    <div className="float-right">
+                      <Link to="#" className="text-white-50">
+                        <i className="mdi mdi-arrow-right h5"></i>
+                      </Link>
+                    </div>
+
+                    <p className="text-white-50 mb-0 mt-1">Since last month</p>
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
           </Row>
 
           <Row>
@@ -193,22 +222,7 @@ class Dashboard extends Component {
                         <LineAreaChart />
                       </div>
                     </Col>
-                    <Col lg={3}>
-                      <Row>
-                        <Col md={12}>
-                          <div className="text-center">
-                            <h3 className="text-muted mb-4">This month</h3>
-                           
-                            <p className="text-muted mb-5">
-                              It will be as simple as in fact it will be
-                              occidental.
-                            </p>
-                            <RadialChart />
-                          </div>
-                        </Col>
-                       
-                      </Row>
-                    </Col>
+                   
                   </Row>
                 </CardBody>
               </Card>

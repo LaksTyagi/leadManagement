@@ -34,8 +34,13 @@ class Dashboard extends Component {
     super(props);
     this.state = {};
   }
-
+  
+  
   render() {
+    const Prospect=this.props.data.leads.filter(a=>a.leadStatus==="Prospect")
+    const notIntrested=this.props.data.leads.filter(a=>a.leadStatus==="Not intrested")
+    const callBack=this.props.data.leads.filter(a=>a.leadStatus==="Call back")
+
     console.log(this.props.data,"....")
     return (
       <React.Fragment>
@@ -100,7 +105,7 @@ class Dashboard extends Component {
                     Total Sales
                     </h5>
                     <h4 className="font-weight-medium font-size-24">
-                    {this.props.data.prospects}
+                    0
                       <i className="mdi mdi-arrow-down text-danger ml-2"></i>
                     </h4>
                     <div className="mini-stat-label bg-danger">
@@ -130,7 +135,7 @@ class Dashboard extends Component {
                     Prospects
                     </h5>
                     <h4 className="font-weight-medium font-size-24">
-                    {this.props.data.notIntrested}
+                    {Prospect?.length}
                       <i className="mdi mdi-arrow-up text-success ml-2"></i>
                     </h4>
                     <div className="mini-stat-label bg-info">
@@ -160,7 +165,7 @@ class Dashboard extends Component {
                     Call back
                     </h5>
                     <h4 className="font-weight-medium font-size-24">
-                    {this.props.data.notIntrested}
+                    {callBack?.length}
                       <i className="mdi mdi-arrow-up text-success ml-2"></i>
                     </h4>
                     <div className="mini-stat-label bg-info">
@@ -190,7 +195,7 @@ class Dashboard extends Component {
                     Not interested
                     </h5>
                     <h4 className="font-weight-medium font-size-24">
-                    {this.props.data.notIntrested}
+                    {notIntrested?.length}
                       <i className="mdi mdi-arrow-up text-success ml-2"></i>
                     </h4>
                     <div className="mini-stat-label bg-info">

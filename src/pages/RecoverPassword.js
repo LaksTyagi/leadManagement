@@ -1,5 +1,6 @@
 import React from 'react';
 import Logo from '../assets/images/yog.jpeg'
+import { Link } from 'react-router-dom'
 
 const Recoverpassword = () => {
     return (
@@ -14,8 +15,8 @@ const Recoverpassword = () => {
             <div className="d-flex flex-column align-items-center p-5">
             <p>Enter your Email and instructions will be sent to you!</p>
             <input type="email" className="form-control mt-3 mb-3" placeholder="Enter Email"/>
-            <button type="submit" className="btn btn-primary">Submit</button>
-            </div> 
+            <Link to="/"><button class="btn btn-primary me-md-2 mb-3" type="button" >Submit</button>
+                       </Link> </div> 
         </div>
     </div>
     );

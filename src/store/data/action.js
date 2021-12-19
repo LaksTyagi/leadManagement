@@ -1,7 +1,7 @@
 import {
     CHANGE_ENQURIY,
      CHANGE_PROSPECTS,
-     CHANGE_NOT_INTRESTED ,TOTAL_USER,USER_REGISTER
+     CHANGE_NOT_INTRESTED ,TOTAL_USER,USER_REGISTER,ADD_LEADS
   } from "./type";
   
   export const changeEnquriy = data => ({
@@ -28,5 +28,9 @@ import {
 
   export const handleRegisterData = data => ({
     type: USER_REGISTER,
+    payload: data
+  });
+  export const leadDataAdd = data => ({
+    type: ADD_LEADS,
     payload: data
   });

@@ -4,7 +4,7 @@ import {
   CHANGE_PROSPECTS,
   CHANGE_NOT_INTRESTED,
   TOTAL_USER,
-  USER_REGISTER,
+  USER_REGISTER,ADD_LEADS
 } from "./type";
 
 const INIT_STATE = {
@@ -13,6 +13,7 @@ const INIT_STATE = {
   notIntrested: 0,
   totalUsers: [],
   register: "",
+  leads:[]
 };
 
 const Layout = (state = INIT_STATE, action) => {
@@ -41,6 +42,11 @@ const Layout = (state = INIT_STATE, action) => {
       return {
         ...state,
         register: action.payload,
+      };
+      case ADD_LEADS:
+      return {
+        ...state,
+        leads: action.payload,
       };
     default:
       return state;

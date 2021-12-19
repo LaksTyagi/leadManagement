@@ -71,7 +71,7 @@ class Dashboard extends Component {
                     Total Leads
                     </h5>
                     <h4 className="font-weight-medium font-size-24">
-                      {this.props.data?.totalUsers?.length}
+                      {this.props.data?.leads?.length}
                       <i className="mdi mdi-arrow-up text-success ml-2"></i>
                     </h4>
                     <div className="mini-stat-label bg-success">

@@ -19,11 +19,46 @@ const SidebarContent = props => {
             <span>Dashboard</span>
           </Link>
         </li>
-
+        <li>
+          <Link to="/Users" className=" waves-effect">
+            <i className="ti-calendar"></i>
+            <span>Users</span>
+          </Link>
+        </li>
         <li>
           <Link to="/leadManagement" className=" waves-effect">
             <i className="ti-calendar"></i>
-            <span>lead management</span>
+            <span>Leads</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/leadManagement" className=" waves-effect">
+            <i className="ti-calendar"></i>
+            <span>Sales</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/leadManagement" className=" waves-effect">
+            <i className="ti-calendar"></i>
+            <span>Invoice</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/leadManagement" className=" waves-effect">
+            <i className="ti-calendar"></i>
+            <span>Quotations</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/leadManagement" className=" waves-effect">
+            <i className="ti-calendar"></i>
+            <span>Product</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/leadManagement" className=" waves-effect">
+            <i className="ti-calendar"></i>
+            <span>Complaints</span>
           </Link>
         </li>
 

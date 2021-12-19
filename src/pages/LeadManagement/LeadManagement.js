@@ -51,14 +51,7 @@ class LeadManagement extends Component {
   componentDidMount() {
     if (this.props.data.totalUsers.length === 0) {
       let userData = [
-        {
-          id: 1,
-          name: "sai",
-          email: "sai@gmail.com",
-          dispose: "",
-          status: "",
-          singleBtn: false,
-        },
+       
       ];
       this.props.changeTotalUser(userData);
     }
@@ -132,146 +125,21 @@ class LeadManagement extends Component {
               <CardBody>
                 <Row>
                   <Col lg={6}>
-                    <h4 className="card-title mb-4">USERS</h4>
+                    <h4 className="card-title mb-4">Leads</h4>
                   </Col>
                   <Col lg={6}>
                     <div>
-                      <Button
+                      <Link to="/add_lead"><Button
                         color="primary"
-                        onClick={() =>
-                          this.setState({ modelOpen: !this.state.modelOpen })
-                        }
+                        // onClick={() =>
+                        //   this.setState({ modelOpen: !this.state.modelOpen })
+                        // }
                         style={{ float: "right" }}
                       >
                         Add Lead
-                      </Button>
-                      <Modal
-                        isOpen={this.state.modelOpen}
-                        fullscreen="sm"
-                        toggle={() =>
-                          this.setState({ modelOpen: !this.state.modelOpen })
-                        }
-                      >
-                        <ModalHeader
-                          toggle={() =>
-                            this.setState({ modelOpen: !this.state.modelOpen })
-                          }
-                        >
-                          Add User
-                        </ModalHeader>
-                        <ModalBody>
-                          <Row>
-                            <Col lg={6}>
-                              <Input
-                                placeholder="Enter Name"
-                                type="text"
-                                onChange={(e) =>
-                                  this.handleModelUpdate(
-                                    this.props.data.totalUsers.length + 1,
-                                    "name",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </Col>
-                            <Col lg={6}>
-                              <Input
-                                placeholder="Enter Email"
-                                type="email"
-                                onChange={(e) =>
-                                  this.handleModelUpdate(
-                                    this.props.data.totalUsers.length + 1,
-                                    "email",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </Col>
-                            <Col lg={6}>
-                              <Input
-                                placeholder="Enter DOB"
-                                type="date"
-                                onChange={(e) =>
-                                  this.handleModelUpdate(
-                                    this.props.data.totalUsers.length + 1,
-                                    "Dob",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </Col>
-                            <Col lg={6}>
-                              <Input
-                                placeholder="Enter Phone number"
-                                type="tel"
-                                onChange={(e) =>
-                                  this.handleModelUpdate(
-                                    this.props.data.totalUsers.length + 1,
-                                    "phone",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </Col>
-                            <Col lg={6}>
-                              <Input
-                                type="select"
-                                placeholder="source"
-                                value="Lead Source"
-                                onChange={(e) =>
-                                  this.handleModelUpdate(
-                                    this.props.data.totalUsers.length + 1,
-                                    "source",
-                                    e.target.value
-                                  )
-                                }
-                              >
-                                <option disabled={true} value="Lead Source">
-                                  Lead Source
-                                </option>
-                                <option value="Just Dial">Just Dial</option>
-                                <option value="Indian Mart">Indian Mart</option>
-                                <option value="News Paper">News Paper</option>
-                                <option value="Website">Website</option>
-                              </Input>
-                            </Col>
-                            <Col lg={6}>
-                              <Input
-                                type="file"
-                                onChange={(e) =>
-                                  this.handleModelUpdate(
-                                    this.props.data.totalUsers.length + 1,
-                                    "selectedFile",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </Col>
-                          </Row>
-                        </ModalBody>
-                        <ModalFooter>
-                          <Button
-                            color="primary"
-                            onClick={() => {
-                              this.handleSubmitModel();
-                              this.setState({
-                                modelOpen: !this.state.modelOpen,
-                              });
-                            }}
-                          >
-                            Submit
-                          </Button>{" "}
-                          <Button
-                            onClick={() =>
-                              this.setState({
-                                modelOpen: !this.state.modelOpen,
-                              })
-                            }
-                          >
-                            Cancel
-                          </Button>
-                        </ModalFooter>
-                      </Modal>
+                      </Button></Link>
+                      
+                      
                     </div>
                   </Col>
                 </Row>
@@ -283,14 +151,14 @@ class LeadManagement extends Component {
                         <th scope="col">(#) Id</th>
                         <th scope="col">Name</th>
 
-                        <th scope="col">Dispose</th>
+                        <th scope="col">Company Name</th>
                         <th scope="col" colSpan="2">
                           Status
                         </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {this.props.data.totalUsers?.map((val) => (
+                      {this.props.data.leads?.map((val) => (
                         <tr>
                           <th scope="row">{val.id}</th>
                           <td>
@@ -300,79 +168,22 @@ class LeadManagement extends Component {
                                 alt=""
                                 className="avatar-xs rounded-circle mr-2"
                               />{" "}
-                              {`${val.name} (${val.email})`}
+                              {`${val.firstName} (${val.email})`}
                             </div>
                           </td>
 
+                        
                           <td>
-                            {" "}
-                            <div className="col-sm-6">
-                              <Dropdown
-                                isOpen={val.singleBtn}
-                                toggle={() => {
-                                  this.handleUpdate(
-                                    val.id,
-                                    "singleBtn",
-                                    !val.singleBtn
-                                  );
-                                }}
-                              >
-                                <DropdownToggle
-                                  className="btn btn-secondary"
-                                  caret
-                                >
-                                  {val.dispose}
-
-                                  <i className="mdi mdi-chevron-down"></i>
-                                </DropdownToggle>
-                                <DropdownMenu
-                                  style={{
-                                    transform: "translate3d(0px, -110px, 0px)",
-                                  }}
-                                >
-                                  <DropdownItem
-                                    onClick={() => {
-                                      this.handleUpdate(
-                                        val.id,
-                                        "dispose",
-                                        "Enquiry"
-                                      );
-                                    }}
-                                  >
-                                    Enquiry
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    onClick={() =>
-                                      this.handleUpdate(
-                                        val.id,
-                                        "dispose",
-                                        "Prospects"
-                                      )
-                                    }
-                                  >
-                                    Prospects
-                                  </DropdownItem>
-                                  <DropdownItem
-                                    onClick={() =>
-                                      this.handleUpdate(
-                                        val.id,
-                                        "dispose",
-                                        "Not Intrested"
-                                      )
-                                    }
-                                  >
-                                    Not Intrested
-                                  </DropdownItem>
-                                </DropdownMenu>
-                              </Dropdown>
-                            </div>
-                          </td>
-                          <td>
-                            <span className="badge badge-success">
-                              {val.status}
+                            <span >
+                              {val.companyName}
                             </span>
                           </td>
                           <td>
+                            <span className="badge badge-success">
+                              {val.source}
+                            </span>
+                          </td>
+                          {/* <td>
                             <div>
                               <Link
                                 to="#"
@@ -382,7 +193,7 @@ class LeadManagement extends Component {
                                 Edit
                               </Link>
                             </div>
-                          </td>
+                          </td> */}
                         </tr>
                       ))}
                     </tbody>
